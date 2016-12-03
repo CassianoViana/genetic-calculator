@@ -4,21 +4,24 @@
 // avaliar o resultado da funcao pra cada cromossomo
 // calcular fitness dos cromossomos, normalizado
 // 
+let Environment = require('./Environment');
+
 "use strict";
 
-let population = [];
+solve("a + 2b + 3c + 4d = 30");
 
-function solve(equation){
-    var a = calculateChromLength(equation);
-    var b = calculatePopulationSize(a);
-    population = generatePopulation(a, b)
+let population = [];
+let equation;
+function solve(e){
+   equation = e;
+   population = generatePopulation();
     
-    while(!mustStop()){
-        evaluate();
-        select();
-        cross();
-        mute();
-    }
+   let environment = new Environment( population );
+    
+   while(!mustStop()){
+       environment.life();
+   }
+   return selectBestChromosome();
 }
 
 function calculateChromLength(equation){
@@ -29,26 +32,15 @@ function calculatePopulationSize(chromLength){
     return 6;
 }
 
-function generatePopulation(chromLength, populationSize){
-    
+function generatePopulation(){
+    var a = calculateChromLength(equation);
+    var b = calculatePopulationSize(a);
 }
 
 function mustStop(){
     
 }
 
-function evaluate(){
-    
-}
-
-function select(){
-    
-}
-
-function cross(){
-    
-}
-
-function mute(){
+function selectBestChromosome(){
     
 }
