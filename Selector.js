@@ -8,7 +8,7 @@ class Selector {
         let fitness = [];
         let totalFitness = 0;        
         for (let i = 0; i < population.length; i++) {
-            fitness[i] = 1 / (1 + population[i].value);
+            fitness[i] = 1 / (1 + Math.abs(population[i].value));
             totalFitness += fitness[i];
         }
 

@@ -13,10 +13,13 @@ class FObj {
     }
 
     calculate(values){
+        let eq = this.equation;
         for (let i = 0; i < values.length; i++) {
-            this.equation = this.equation.replace(this.vars[i], values[i]);
+            let variable = this.vars[i];
+            let value = values[i];
+            eq = eq.replace(variable, value);
         }
-        return eval(this.equation);
+        return eval(eq);
     }
 
 }

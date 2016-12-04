@@ -2,22 +2,41 @@
 
 class Environment {
 
-    constructor(population, evaluator) {
+    constructor(population, evaluator, selector, crosser, mutator) {
         this.population = population;
         this.evaluator = evaluator;
+        this.selector = selector;
+        this.crosser = crosser;
+        this.mutator = mutator;
     }
 
     life() {
-        evaluate();
-        select();
-        cross();
-        mute();
+        this.evaluate();
+        this.select();
+        this.cross();
+        this.mutate();
     }
 
     evaluate() {
-        for(let chromossome in this.population){
-            this.evaluator.evaluate(chromossome);
+        for(let i = 0; i < this.population.length; i++){
+            this.evaluator.evaluate(this.population[i]);
         }
+    }
+
+    foundSolution(acceptedError){
+        for(let i = 0; i < this.population.length; i++){
+            let chromossome = this.population[i];
+            this.evaluator.evaluate(chromossome);
+            if(chromossome.value == 0){
+                console.log("found: ", chromossome);
+                return true;
+            }
+            if(chromossome.value < 0 + acceptedError){
+                console.log("near: ", chromossome);
+                return true;
+            }
+        }
+        return false;
     }
 
     select() {
@@ -25,11 +44,11 @@ class Environment {
     }
 
     cross() {
-
+        this.crosser.cross(this.population);
     }
 
-    mute() {
-
+    mutate() {
+        this.mutator.mutate(this.population);
     }
 
 }

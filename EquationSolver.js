@@ -1,40 +1,78 @@
-let Environment = require('./Environment');
-
 "use strict";
 
-solve("a + 2b + 3c + 4d = 30");
+let Environment = require('./Environment');
+let Chromossome = require('./Chromossome');
+let Evaluator = require('./Evaluator');
+let Selector = require('./Selector');
+let Crosser = require('./Crosser');
+let Mutator = require('./Mutator');
 
-let population = [];
-let equation;
-function solve(e){
-   equation = e;
-   population = generatePopulation();
-    
-   let environment = new Environment( population );
-    
-   while(!mustStop()){
-       environment.life();
-   }
-   return selectBestChromosome();
+class EquationSolver {
+
+    constructor(){
+        this.CROSS_RATE = 0.80;
+        this.MUTATION_RATE = 0.1;
+        this.MAX_GENE_VAL = 100;
+        this.POPULATION_SIZE = 15;
+        this.MAX_ITERATIONS = 1000;
+        this.ACCEPTED_ERROR = 0.05;
+    }
+
+    solve(equation) {
+        this.prepareEnvironment(equation);
+        while (!this.mustStop()) {
+            this.environment.life();
+        }
+        this.selectBestChromossome();
+        console.log(this.iterations, "generations");
+    }
+
+    prepareEnvironment(equation) {
+        this.iterations = 0;
+        this.equation = equation;
+        this.population = this.generatePopulation();
+        this.environment = new Environment(
+            this.population,
+            new Evaluator(equation),
+            new Selector(),
+            new Crosser(this.CROSS_RATE),
+            new Mutator(this.MUTATION_RATE, this.MAX_GENE_VAL)
+        );
+    }
+
+    generatePopulation() {
+        let chromossomeLength = this.calculateChromossomeLength(this.equation);
+        let populationSize = this.calculatePopulationSize(chromossomeLength);
+        let population = [];
+        for(let i = 0; i < populationSize; i++){
+            let genes = [];
+            for(let j = 0; j < chromossomeLength; j++){
+                genes[j] = Math.ceil(Math.random() * this.MAX_GENE_VAL);
+            }
+            population[i] = new Chromossome(genes);
+        }
+        return population;
+    }
+
+    calculateChromossomeLength(equation) {
+        return equation.match(/[A-z]/g).length;
+    }
+
+    calculatePopulationSize(chromLength) {
+        return this.POPULATION_SIZE;
+    }
+
+    mustStop() {
+        return (this.iterations++ > this.MAX_ITERATIONS)
+            || (this.environment.foundSolution(this.ACCEPTED_ERROR));
+    }
+
+    selectBestChromossome(){
+        let population = this.environment.population;
+        for(let i = 0; i < population.length; i++){
+            console.log(population[i]);
+        }
+    }
 }
 
-function calculateChromossomeLength(equation){
-    return 4;
-}
-
-function calculatePopulationSize(chromLength){
-    return 6;
-}
-
-function generatePopulation(){
-    var a = calculateChromossomeLength(equation);
-    var b = calculatePopulationSize(a);
-}
-
-function mustStop(){
-        
-}
-
-function selectBestChromosome(){
-    
-}
+module.exports = EquationSolver;

@@ -10,9 +10,9 @@ class Evaluator {
     }
 
     evaluate(chromossome){
-        chromossome.value = this.fobj.calculate(chromossome.genes);
+        let value = this.fobj.calculate(chromossome.genes);
+        chromossome.value = Math.abs(value);
     }
-    
 }
 
 module.exports = Evaluator;

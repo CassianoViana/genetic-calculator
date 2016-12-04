@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 let FObj = require('./FObj');
 let Chromossome = require('./Chromossome');
@@ -6,17 +6,20 @@ let Evaluator = require('./Evaluator');
 let Selector = require('./Selector');
 let Crosser = require('./Crosser');
 let Mutator = require('./Mutator');
+let EquationSolver = require('./EquationSolver');
 let MyTest = require('./MyTest');
 
 class Tests extends MyTest {
 
     constructor() {
         super();
+        super.run(this.test_equation_solver);
         super.run(this.test_evaluate);
         super.run(this.test_evaluate_chromossome);
         super.run(this.test_select_population);
         super.run(this.test_cross);
         super.run(this.test_mutate);
+        super.run(this.test_mutate2);
     }
 
     /*
@@ -117,6 +120,22 @@ class Tests extends MyTest {
         return [expected, result];
     }
 
+    test_mutate2() {
+        let population = [
+            new Chromossome([2, 5, 17, 1]),
+            new Chromossome([10, 4, 13, 14]),
+            new Chromossome([12, 5, 23, 8]),
+            new Chromossome([20, 4, 13, 14]),
+            new Chromossome([10, 4, 18, 3]),
+            new Chromossome([20, 1, 10, 6])
+        ];
+
+        let mutator = new Mutator(0.1, 30);
+        mutator.mutate(population);
+
+        return [true, true];
+    }
+
     test_mutate() {
         let population = [
             new Chromossome([2, 5, 17, 1]),
@@ -128,14 +147,14 @@ class Tests extends MyTest {
         ];
 
         let randomPositions = [];
-        randomPositions[0] =  12;
+        randomPositions[0] = 12;
         randomPositions[1] = 18;
         let randomNewGenes = [];
-        randomNewGenes[0] =  2;
+        randomNewGenes[0] = 2;
         randomNewGenes[1] = 5;
 
         let mutator = new Mutator(0.1);
-        mutator.mutate(population, randomPositions, randomNewGenes); 
+        mutator.mutate(population, randomPositions, randomNewGenes);
 
         let expected = true;
         let result =
@@ -146,6 +165,11 @@ class Tests extends MyTest {
             super.eqArray(population[4].genes, [10, 5, 18, 3]) &&
             super.eqArray(population[5].genes, [20, 1, 10, 6]);
         return [expected, result];
+    }
+
+    test_equation_solver() {
+        let result = new EquationSolver().solve("a + 2*b = 20");
+        return [true, true];
     }
 }
 
