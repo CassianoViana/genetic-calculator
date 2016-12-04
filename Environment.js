@@ -1,31 +1,37 @@
 "use strict";
 
 class Environment {
-    
-    constructor( population ){
+
+    constructor(population, evaluator) {
         this.population = population;
+        this.evaluator = evaluator;
     }
-    
-    life(){
-        
+
+    life() {
+        evaluate();
+        select();
+        cross();
+        mute();
     }
-    
-    evaluate(){
-        
+
+    evaluate() {
+        for(let chromossome in this.population){
+            this.evaluator.evaluate(chromossome);
+        }
     }
-    
-    select(){
-        
+
+    select() {
+        this.population = this.selector.select(this.population);
     }
-    
-    cross(){
-        
+
+    cross() {
+
     }
-    
-    mute(){
-        
+
+    mute() {
+
     }
-    
+
 }
 
 module.exports = Environment;

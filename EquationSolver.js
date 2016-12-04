@@ -1,9 +1,3 @@
-// pegar funcao
-// contar variáveis
-// criar cromossomos com espaços para as variáveis
-// avaliar o resultado da funcao pra cada cromossomo
-// calcular fitness dos cromossomos, normalizado
-// 
 let Environment = require('./Environment');
 
 "use strict";
@@ -24,7 +18,7 @@ function solve(e){
    return selectBestChromosome();
 }
 
-function calculateChromLength(equation){
+function calculateChromossomeLength(equation){
     return 4;
 }
 
@@ -33,12 +27,12 @@ function calculatePopulationSize(chromLength){
 }
 
 function generatePopulation(){
-    var a = calculateChromLength(equation);
+    var a = calculateChromossomeLength(equation);
     var b = calculatePopulationSize(a);
 }
 
 function mustStop(){
-    
+        
 }
 
 function selectBestChromosome(){
