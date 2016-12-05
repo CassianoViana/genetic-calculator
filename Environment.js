@@ -23,22 +23,6 @@ class Environment {
         }
     }
 
-    foundSolution(acceptedError){
-        for(let i = 0; i < this.population.length; i++){
-            let chromossome = this.population[i];
-            this.evaluator.evaluate(chromossome);
-            if(chromossome.value == 0){
-                console.log("found: ", chromossome);
-                return true;
-            }
-            if(chromossome.value < 0 + acceptedError){
-                console.log("near: ", chromossome);
-                return true;
-            }
-        }
-        return false;
-    }
-
     select() {
         this.population = this.selector.select(this.population);
     }

@@ -14,7 +14,7 @@ class EquationSolver {
         this.MUTATION_RATE = 0.1;
         this.MAX_GENE_VAL = 100;
         this.POPULATION_SIZE = 15;
-        this.MAX_ITERATIONS = 1000;
+        this.MAX_GENERATIONS = 1000;
         this.ACCEPTED_ERROR = 0.05;
     }
 
@@ -23,12 +23,11 @@ class EquationSolver {
         while (!this.mustStop()) {
             this.environment.life();
         }
-        this.selectBestChromossome();
-        console.log(this.iterations, "generations");
+        return this.selectBestChromossome();
     }
 
     prepareEnvironment(equation) {
-        this.iterations = 0;
+        this.generations = 0;
         this.equation = equation;
         this.population = this.generatePopulation();
         this.environment = new Environment(
@@ -63,15 +62,33 @@ class EquationSolver {
     }
 
     mustStop() {
-        return (this.iterations++ > this.MAX_ITERATIONS)
-            || (this.environment.foundSolution(this.ACCEPTED_ERROR));
+        return (this.generations++ > this.MAX_GENERATIONS)
+            || (this.foundSolution(this.ACCEPTED_ERROR));
+    }
+
+    foundSolution(acceptedError){
+        let population = this.environment.population;
+        for(let i = 0; i < population.length; i++){
+            let chromossome = population[i];
+            this.environment.evaluator.evaluate(chromossome);
+            if(chromossome.value == 0){
+                this.result = chromossome;
+                return true;
+            }
+            if(chromossome.value < 0 + acceptedError){
+                return true;
+            }
+        }
+        return false;
     }
 
     selectBestChromossome(){
+        if(this.result) return this.result;
         let population = this.environment.population;
-        for(let i = 0; i < population.length; i++){
-            console.log(population[i]);
-        }
+        
+        return population.reduce((a,b)=>{ 
+           return this.environment.evaluator.evaluate(a) < this.environment.evaluator.evaluate(b) ? a : b 
+        });
     }
 }
 

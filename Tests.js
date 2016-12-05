@@ -168,7 +168,7 @@ class Tests extends MyTest {
     }
 
     test_equation_solver() {
-        let result = new EquationSolver().solve("a + 2*b = 20");
+        let result = new EquationSolver().solve("2*a + b/4 = 20");
         return [true, true];
     }
 }
