@@ -11,7 +11,7 @@ class Main {
     test_equation_solver() {
 
         let geneticCalculator = new EquationSolver();
-        let result = geneticCalculator.solve("2*a + b/4 = 20");
+        let result = geneticCalculator.solve("2*s + 4*f - 3*c = b");
 
         console.log("Equation: ", geneticCalculator.equation);
         console.log("Result: ", result);
