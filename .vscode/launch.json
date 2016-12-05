@@ -9,7 +9,8 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceRoot}/Main.js",
-            "cwd": "${workspaceRoot}"
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "C:\\Users\\5429242\\Downloads\\NodeJSPortable\\App\\NodeJS\\node.exe"
         },
         {
             "type": "node",
