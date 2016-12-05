@@ -46,7 +46,9 @@ class EquationSolver {
         for(let i = 0; i < populationSize; i++){
             let genes = [];
             for(let j = 0; j < chromossomeLength; j++){
-                genes[j] = Math.ceil(Math.random() * this.MAX_GENE_VAL);
+                let value = Math.ceil(Math.random() * this.MAX_GENE_VAL);
+                let multiply = Math.ceil(Math.random() * 10) % 2 == 0 ? 1 : -1; 
+                genes[j] = value * multiply;
             }
             population[i] = new Chromossome(genes);
         }
