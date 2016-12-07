@@ -10,7 +10,7 @@ class Crosser {
         let parents = this.selectParents(population, testRandomParents);
         let cutPoints = testCutPoints || this.randomCutPoints(population);
 
-        let crossovers = [];
+        let genes = [];
         let chromossomeLength = population[0].genes.length;
         for (let i = 0; i < parents.length; i++) {
             let i2 = (i + 1) % parents.length;
@@ -26,11 +26,11 @@ class Crosser {
                 genesChild[k] = genesFemale[k];
                 k++;
             }
-            crossovers[i] = genesChild;
+            genes[i] = genesChild;
         }
 
         for(let i = 0; i < parents.length; i++){
-            parents[i].genes = crossovers[i];
+            parents[i].genes = genes[i];
         }
     }
 

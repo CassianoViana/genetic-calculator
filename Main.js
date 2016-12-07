@@ -11,12 +11,18 @@ class Main {
     test_equation_solver() {
 
         let geneticCalculator = new EquationSolver();
-        let result = geneticCalculator.solve("2*s + 4*f - 3*c = b");
+        let result = geneticCalculator.solve("2*a + b + c = 100");
 
+        console.log("Best genes by generation: \n", geneticCalculator.environment.bestChromossomes);
+        console.log("----------------------------------------------------")
         console.log("Equation: ", geneticCalculator.equation);
+        console.log("----------------------------------------------------")
         console.log("Result: ", result);
+        console.log("----------------------------------------------------")
         console.log("Generations: ", geneticCalculator.generations);
-        console.log("Last Generation: ", geneticCalculator.environment.population);
+        console.log("----------------------------------------------------")
+        console.log("Last Generation: \n", geneticCalculator.environment.population);
+        console.log("----------------------------------------------------")
     }
 }
 

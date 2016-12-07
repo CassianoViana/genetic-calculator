@@ -10,9 +10,9 @@ let Mutator = require('./Mutator');
 class EquationSolver {
 
     constructor(){
-        this.CROSS_RATE = 0.80;
-        this.MUTATION_RATE = 0.1;
-        this.MAX_GENE_VAL = 100;
+        this.CROSS_RATE = 0.30;
+        this.MUTATION_RATE = 0.2;
+        this.MAX_GENE_VAL = 30;
         this.POPULATION_SIZE = 15;
         this.MAX_GENERATIONS = 1000;
         this.ACCEPTED_ERROR = 0.05;
@@ -22,6 +22,7 @@ class EquationSolver {
         this.prepareEnvironment(equation);
         while (!this.mustStop()) {
             this.environment.life();
+            this.generations++;
         }
         return this.selectBestChromossome();
     }
@@ -64,11 +65,11 @@ class EquationSolver {
     }
 
     mustStop() {
-        return (this.generations++ > this.MAX_GENERATIONS)
-            || (this.foundSolution(this.ACCEPTED_ERROR));
+        return (this.foundSolution())
+            || (this.generations >= this.MAX_GENERATIONS);
     }
 
-    foundSolution(acceptedError){
+    foundSolution(){
         let population = this.environment.population;
         for(let i = 0; i < population.length; i++){
             let chromossome = population[i];
@@ -77,7 +78,7 @@ class EquationSolver {
                 this.result = chromossome;
                 return true;
             }
-            if(chromossome.value < 0 + acceptedError){
+            if(chromossome.value < 0 + this.ACCEPTED_ERROR){
                 return true;
             }
         }

@@ -20,12 +20,8 @@ class Mutator {
             let randomPosition = randomPositions[i];
             let randomNewGene = randomNewGenes[i];
             
-            let genePosition = (randomPosition % clength);
-            if(genePosition == 0) genePosition = clength;
-            genePosition = genePosition - 1.
-
-            let chromossomePosition = Math.ceil(randomPosition / clength);
-            chromossomePosition = chromossomePosition - 1;
+            let genePosition = ((randomPosition - 1) % clength);
+            let chromossomePosition = Math.ceil(randomPosition / clength) - 1;
 
             population[chromossomePosition].genes[genePosition] = randomNewGene;
         }

@@ -8,6 +8,7 @@ class Environment {
         this.selector = selector;
         this.crosser = crosser;
         this.mutator = mutator;
+        this.bestChromossomes = [];
     }
 
     life() {
@@ -21,6 +22,8 @@ class Environment {
         for(let i = 0; i < this.population.length; i++){
             this.evaluator.evaluate(this.population[i]);
         }
+        let best = this.population.reduce((a, b)=> a.value < b.value ? a : b);
+        this.bestChromossomes.push({genes: best.genes, result: best.value });
     }
 
     select() {
